@@ -1,0 +1,1 @@
+pyrcc4 -o resourses.py resourses.qrc
