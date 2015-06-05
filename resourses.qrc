@@ -1,5 +1,11 @@
-<!DOCTYPE RCC><RCC version="1.0">
-<qresource>
+<RCC>
+  <qresource>
+    <file>images/textures/brick.png</file>
+    <file>images/objects/bricks.png</file>
+    <file>images/objects/factory.png</file>
+    <file>images/objects/garage.png</file>
+    <file>images/objects/robot.png</file>
+    <file>images/objects/shit.png</file>
     <file>images/pointer.png</file>
     <file>images/linepointer.png</file>
     <file>images/textpointer.png</file>
@@ -15,6 +21,5 @@
     <file>images/background2.png</file>
     <file>images/background3.png</file>
     <file>images/background4.png</file>
-</qresource>
+  </qresource>
 </RCC>
-

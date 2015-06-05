@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>627</width>
-    <height>581</height>
+    <width>644</width>
+    <height>730</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -62,8 +62,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>323</width>
-              <height>171</height>
+              <width>332</width>
+              <height>210</height>
              </rect>
             </property>
             <attribute name="label">
@@ -90,8 +90,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>323</width>
-              <height>69</height>
+              <width>332</width>
+              <height>114</height>
              </rect>
             </property>
             <attribute name="label">
@@ -108,12 +108,25 @@
               <widget class="QToolButton" name="toolButton">
                <property name="minimumSize">
                 <size>
-                 <width>60</width>
-                 <height>30</height>
+                 <width>40</width>
+                 <height>40</height>
                 </size>
                </property>
                <property name="text">
-                <string>Стена</string>
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="resourses.qrc">
+                 <normaloff>:/images/objects/bricks.png</normaloff>:/images/objects/bricks.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>40</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="shortcut">
+                <string/>
                </property>
                <property name="checkable">
                 <bool>true</bool>
@@ -121,21 +134,8 @@
                <property name="checked">
                 <bool>true</bool>
                </property>
-              </widget>
-             </item>
-             <item row="1" column="2">
-              <widget class="QToolButton" name="toolButton_6">
-               <property name="minimumSize">
-                <size>
-                 <width>60</width>
-                 <height>30</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>заправка</string>
-               </property>
-               <property name="checkable">
-                <bool>true</bool>
+               <property name="autoRepeat">
+                <bool>false</bool>
                </property>
               </widget>
              </item>
@@ -143,12 +143,22 @@
               <widget class="QToolButton" name="toolButton_4">
                <property name="minimumSize">
                 <size>
-                 <width>60</width>
-                 <height>30</height>
+                 <width>40</width>
+                 <height>40</height>
                 </size>
                </property>
                <property name="text">
                 <string>Склад</string>
+               </property>
+               <property name="icon">
+                <iconset resource="resourses.qrc">
+                 <normaloff>:/images/objects/garage.png</normaloff>:/images/objects/garage.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>40</width>
+                 <height>40</height>
+                </size>
                </property>
                <property name="checkable">
                 <bool>true</bool>
@@ -159,12 +169,22 @@
               <widget class="QToolButton" name="toolButton_5">
                <property name="minimumSize">
                 <size>
-                 <width>60</width>
-                 <height>30</height>
+                 <width>40</width>
+                 <height>40</height>
                 </size>
                </property>
                <property name="text">
                 <string>Гараж</string>
+               </property>
+               <property name="icon">
+                <iconset resource="resourses.qrc">
+                 <normaloff>:/images/objects/factory.png</normaloff>:/images/objects/factory.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>40</width>
+                 <height>40</height>
+                </size>
                </property>
                <property name="checkable">
                 <bool>true</bool>
@@ -175,12 +195,22 @@
               <widget class="QToolButton" name="toolButton_3">
                <property name="minimumSize">
                 <size>
-                 <width>60</width>
-                 <height>30</height>
+                 <width>40</width>
+                 <height>40</height>
                 </size>
                </property>
                <property name="text">
                 <string>говно</string>
+               </property>
+               <property name="icon">
+                <iconset resource="resourses.qrc">
+                 <normaloff>:/images/objects/shit.png</normaloff>:/images/objects/shit.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>40</width>
+                 <height>40</height>
+                </size>
                </property>
                <property name="checkable">
                 <bool>true</bool>
@@ -191,12 +221,22 @@
               <widget class="QToolButton" name="toolButton_2">
                <property name="minimumSize">
                 <size>
-                 <width>60</width>
-                 <height>30</height>
+                 <width>40</width>
+                 <height>40</height>
                 </size>
                </property>
                <property name="text">
-                <string>Танк</string>
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="resourses.qrc">
+                 <normaloff>:/images/objects/robot.png</normaloff>:/images/objects/robot.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>40</width>
+                 <height>40</height>
+                </size>
                </property>
                <property name="checkable">
                 <bool>true</bool>
@@ -348,7 +388,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>627</width>
+     <width>644</width>
      <height>21</height>
     </rect>
    </property>
@@ -407,6 +447,8 @@
    <header>graphic_scene.graphic_view</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="resourses.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -19,7 +19,6 @@ class MainWindow(QtGui.QMainWindow):
     SHIT_ID = 2
     STORAGE_ID = 3
     GARAGE_ID = 4
-    GAS_STATION_ID = 5
     
     def __init__(self, parent=None):
         super(QtGui.QWidget, self).__init__(parent)
@@ -43,7 +42,6 @@ class MainWindow(QtGui.QMainWindow):
         self.buttonGroup.addButton(self.toolButton_3, self.SHIT_ID)
         self.buttonGroup.addButton(self.toolButton_4, self.STORAGE_ID)
         self.buttonGroup.addButton(self.toolButton_5, self.GARAGE_ID)
-        self.buttonGroup.addButton(self.toolButton_6, self.GAS_STATION_ID)
         
         self.scene.left_button_clicked.connect(self.on_left_button_clicked)
         self.buttonGroup.buttonClicked[int].connect(self.buttonGroupClicked)

@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 from PyQt4 import QtCore, QtGui, uic
 from PyQt4.QtCore import pyqtSlot, pyqtSignal
+import resourses
 
 class BaseItem(QtGui.QGraphicsRectItem):
     NO_MOVE = -1
@@ -15,7 +16,14 @@ class BaseItem(QtGui.QGraphicsRectItem):
         self.setFlag(QtGui.QGraphicsItem.ItemIsSelectable, True)
         #self.setFlag(QtGui.QGraphicsItem.ItemIgnoresTransformations, True)
         self.setRect(rect)
-        self.setBrush(QtGui.QBrush(QtCore.Qt.red, QtCore.Qt.FDiagPattern))
+        #self.setBrush(QtGui.QBrush(QtCore.Qt.red, QtCore.Qt.FDiagPattern))
+        #self.setBrush(QtGui.QBrush(QtCore.Qt.red))
+        pix = QtGui.QImage()
+        
+        if not pix.load(":/images/textures/brick.png"):
+            print "OBLOM"
+
+        self.setBrush(QtGui.QBrush(pix))
         self.setPen(QtGui.QPen(QtCore.Qt.green, 3))
 
         self.border_brush = QtGui.QBrush(QtCore.Qt.red)
@@ -41,21 +49,25 @@ class BaseItem(QtGui.QGraphicsRectItem):
         self.setSelected(True)
         self.contextMenu.exec_(event.screenPos())
     
+    def grid_point(self, pos):
+        return self.mapFromScene(self.scene().grid_point(self.mapToScene(pos)))
+
     def mouseMoveEvent(self, event):
         if self.move_border_flag == self.MOVE_TOP_LEFT:
             r = self.rect()
-            r.setTopLeft(event.pos() + self.offset)
+            r.setTopLeft(self.grid_point(event.pos() + self.offset))
             self.setRect(r)
             return
         elif self.move_border_flag == self.MOVE_BOTTOM_RIGHT:
             r = self.rect()
-            r.setBottomRight(event.pos() + self.offset)
+            r.setBottomRight(self.grid_point(event.pos() + self.offset))
             self.setRect(r)
             return
         QtGui.QGraphicsRectItem.mouseMoveEvent(self, event)
 
     def mousePressEvent(self, event):
         r = self.rect()
+
         if QtCore.QRectF(r.x(), r.y(), self.select_border_size, self.select_border_size).contains(event.pos()):
             self.move_border_flag = self.MOVE_TOP_LEFT
             self.offset = r.topLeft() - event.pos()
