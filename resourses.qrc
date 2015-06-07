@@ -1,5 +1,6 @@
 <RCC>
   <qresource>
+    <file>images/Drag.png</file>
     <file>images/textures/brick.png</file>
     <file>images/objects/bricks.png</file>
     <file>images/objects/factory.png</file>

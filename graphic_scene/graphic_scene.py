@@ -74,7 +74,7 @@ class GraphicScene(QtGui.QGraphicsScene):
 
         left = rect.left() - math.modf(rect.left() / grid_step[0])[0] * grid_step[0]
         painter.setPen(self.GRID_PEN)
-        
+       
         while left <= rect.right():
             painter.drawLine(left, rect.top(), left, rect.bottom())
             left += grid_step[0]
@@ -90,12 +90,12 @@ class GraphicScene(QtGui.QGraphicsScene):
         '''Рисуем линейку на переднем плане'''
         grid_step, rect = self.scene_grid_steps(view)
         left = rect.left() - math.modf(rect.left() / grid_step[0])[0] * grid_step[0]
-        painter.resetTransform()
-
         width = view.viewport().width()
         height = view.viewport().height()
-
         
+        painter.resetTransform()        
+        #painter.setClipRect(QtCore.QRect(0,0, width, height))
+       
         painter.setPen(self.RULER_PEN)
         painter.setBrush(self.RULER_BRUSH)
         painter.drawRect(0, 0, width, self.RULER_WIDTH)
