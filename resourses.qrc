@@ -1,5 +1,6 @@
 <RCC>
   <qresource>
+    <file>images/objects/bulldozer.png</file>
     <file>images/Drag.png</file>
     <file>images/textures/brick.png</file>
     <file>images/objects/bricks.png</file>
@@ -22,5 +23,6 @@
     <file>images/background2.png</file>
     <file>images/background3.png</file>
     <file>images/background4.png</file>
+    <file>images/textures/bulldozer-top.png</file>
   </qresource>
 </RCC>

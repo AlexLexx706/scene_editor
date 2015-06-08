@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 from PyQt4 import QtCore, QtGui, uic
 from PyQt4.QtCore import pyqtSlot, pyqtSignal
-from items.editable_item import EditableItem
+from items.brick_item import BrickItem
+from items.robot_item import RobotItem
 from items_model.items_model import ItemsModel
 from graphic_scene.graphic_scene import GraphicScene
 import resourses
@@ -108,11 +109,18 @@ class MainWindow(QtGui.QMainWindow):
 
             #Сделаем стену
             if desc["type"] == self.BORDER_ID:
-                item = EditableItem(self.menu_elements)
+                item = BrickItem(context_menu = self.menu_elements, rect=QtCore.QRectF(-20, -20, 40, 40))
                 item.setData(0, {"name": u"Стена"})
                 self.scene.addItem(item)
                 item.setPos(self.scene.grid_point(desc["scene_pos"]))
                 self.items_model.add_object(item)
+            elif desc["type"] == self.ROBOT_ID:
+                item = RobotItem(context_menu = self.menu_elements, rect=QtCore.QRectF(-20, -20, 40, 40))
+                item.setData(0, {"name": u"Бендер"})
+                self.scene.addItem(item)
+                item.setPos(self.scene.grid_point(desc["scene_pos"]))
+                self.items_model.add_object(item)
+                
 
     @pyqtSlot('const QItemSelection &', 'const QItemSelection &')
     def on_listView_objects_selectionChanged(self, selected, deselected):

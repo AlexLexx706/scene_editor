@@ -10,6 +10,8 @@ class EditableItem(QtGui.QGraphicsItem):
     CORNER_CHANGED = QtGui.QGraphicsItem.ItemTransformOriginPointHasChanged + 1
     
     def __init__(self, context_menu=None, rect=QtCore.QRectF(-20, -20, 40, 40)):
+
+        self._attach_grid = True
         super(EditableItem, self).__init__()
         self.setFlag(QtGui.QGraphicsItem.ItemIsMovable, True)
         self.setFlag(QtGui.QGraphicsItem.ItemIsSelectable, True)
@@ -22,13 +24,16 @@ class EditableItem(QtGui.QGraphicsItem):
         self._shape_path = QtGui.QPainterPath()
         self._shape_path.addRect(self._rect)
 
-        self._brush = QtGui.QBrush(QtGui.QImage(":/images/textures/brick.png"))
-        self._pen = QtGui.QPen(QtCore.Qt.green, 1)
-
         self._edit_marker_brush = QtGui.QBrush(QtCore.Qt.black)
         self._edit_marker_size = 10
         self._edit_markers = None
         self._cur_edit_marker = None
+    
+    def is_attach_grid(self):
+        return self._attach_grid
+    
+    def set_attach_grid(self, v):
+        self._attach_grid =  v
     
     def is_enable_edit(self):
         return self._enable_edit
@@ -36,7 +41,7 @@ class EditableItem(QtGui.QGraphicsItem):
     def set_enable_edit(self, v):
         if self._enable_edit != v:
             self._enable_edit = v
-            self._update_rect(rect, self.isSelected())
+            self._update_rect(self._rect, self.isSelected())
 
     def get_rect(self):
         return self._rect
@@ -51,41 +56,6 @@ class EditableItem(QtGui.QGraphicsItem):
         if rect != self._rect:
             self._update_rect(rect, self.isSelected())
     
-    def _update_rect(self, rect, is_selected):
-        self.prepareGeometryChange()
-        self._rect = rect
-
-        if not is_selected or not self._enable_edit:
-            self._b_rect = self._rect
-            self._shape_path = QtGui.QPainterPath()
-            self._shape_path.addRect(self._rect)
-            self._edit_markers = None
-        else:
-            self._b_rect = QtCore.QRectF(self._rect.x() - self._edit_marker_size,
-                                        self._rect.y() - self._edit_marker_size,
-                                        self._rect.width() + self._edit_marker_size * 2,
-                                        self._rect.height() + self._edit_marker_size * 2)
-            
-            self._edit_markers = [
-                (QtCore.QRectF(self._b_rect.x(), self._b_rect.y(), self._edit_marker_size, self._edit_marker_size),
-                    QtCore.QRectF.topLeft, QtCore.QRectF.setTopLeft),
-                (QtCore.QRectF(self._b_rect.x() + self._b_rect.width() - self._edit_marker_size, self._b_rect.y(), self._edit_marker_size, self._edit_marker_size),
-                    QtCore.QRectF.topRight, QtCore.QRectF.setTopRight),
-                (QtCore.QRectF(self._b_rect.x(), self._b_rect.y() + self._b_rect.height() - self._edit_marker_size, self._edit_marker_size, self._edit_marker_size),
-                    QtCore.QRectF.bottomLeft, QtCore.QRectF.setBottomLeft),
-                (QtCore.QRectF(self._b_rect.x() + self._b_rect.width() - self._edit_marker_size, self._b_rect.y() + self._b_rect.height() - self._edit_marker_size, self._edit_marker_size, self._edit_marker_size), 
-                    QtCore.QRectF.bottomRight, QtCore.QRectF.setBottomRight)
-            ]
-
-            self._shape_path = QtGui.QPainterPath()
-            self._shape_path.addRect(self._rect)
-            
-            for d in self._edit_markers:
-                self._shape_path.addRect(d[0])
-
-        self.update()
-
-
     def boundingRect(self):
         return self._b_rect
 
@@ -99,14 +69,17 @@ class EditableItem(QtGui.QGraphicsItem):
             self.prepareGeometryChange()
             self._update_rect(self._rect, value.toBool())
         #приведём координаты к сетке
-        elif change == self.CORNER_CHANGED or change == QtGui.QGraphicsItem.ItemPositionChange:
+        elif self._attach_grid and (change == self.CORNER_CHANGED or change == QtGui.QGraphicsItem.ItemPositionChange):
             return QtCore.QVariant(self.mapFromScene(self.scene().grid_point(self.mapToScene(value.toPointF()))))
         return super(EditableItem, self).itemChange(change, value)
-        
-    def paint(self, painter, option, widget):
-        painter.setPen(self._pen)
-        painter.setBrush(self._brush)
+    
+    def paint_item(self, painter, option, widget):
+        painter.setPen(QtGui.QPen(QtCore.Qt.green, 1))
+        painter.setBrush(QtGui.QBrush(QtCore.Qt.green))
         painter.drawRect(self._rect)
+    
+    def paint(self, painter, option, widget):
+        self.paint_item(painter, option, widget)
         
         #рисуем маркеры редактирования
         if self._edit_markers is not None:
@@ -150,3 +123,37 @@ class EditableItem(QtGui.QGraphicsItem):
             return
 
         super(EditableItem, self).mouseMoveEvent(event)
+
+    def _update_rect(self, rect, is_selected):
+        self.prepareGeometryChange()
+        self._rect = rect
+
+        if not is_selected or not self._enable_edit:
+            self._b_rect = self._rect
+            self._shape_path = QtGui.QPainterPath()
+            self._shape_path.addRect(self._rect)
+            self._edit_markers = None
+        else:
+            self._b_rect = QtCore.QRectF(self._rect.x() - self._edit_marker_size,
+                                        self._rect.y() - self._edit_marker_size,
+                                        self._rect.width() + self._edit_marker_size * 2,
+                                        self._rect.height() + self._edit_marker_size * 2)
+            
+            self._edit_markers = [
+                (QtCore.QRectF(self._b_rect.x(), self._b_rect.y(), self._edit_marker_size, self._edit_marker_size),
+                    QtCore.QRectF.topLeft, QtCore.QRectF.setTopLeft),
+                (QtCore.QRectF(self._b_rect.x() + self._b_rect.width() - self._edit_marker_size, self._b_rect.y(), self._edit_marker_size, self._edit_marker_size),
+                    QtCore.QRectF.topRight, QtCore.QRectF.setTopRight),
+                (QtCore.QRectF(self._b_rect.x(), self._b_rect.y() + self._b_rect.height() - self._edit_marker_size, self._edit_marker_size, self._edit_marker_size),
+                    QtCore.QRectF.bottomLeft, QtCore.QRectF.setBottomLeft),
+                (QtCore.QRectF(self._b_rect.x() + self._b_rect.width() - self._edit_marker_size, self._b_rect.y() + self._b_rect.height() - self._edit_marker_size, self._edit_marker_size, self._edit_marker_size), 
+                    QtCore.QRectF.bottomRight, QtCore.QRectF.setBottomRight)
+            ]
+
+            self._shape_path = QtGui.QPainterPath()
+            self._shape_path.addRect(self._rect)
+            
+            for d in self._edit_markers:
+                self._shape_path.addRect(d[0])
+
+        self.update()

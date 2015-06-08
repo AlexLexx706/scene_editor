@@ -1,2 +1,4 @@
 /graphic_scene/*.pyc
 /*.pyc
+
+/items/*.pyc

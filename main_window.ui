@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>644</width>
+    <width>648</width>
     <height>730</height>
    </rect>
   </property>
@@ -36,7 +36,7 @@
         </rectf>
        </property>
        <property name="renderHints">
-        <set>QPainter::Antialiasing|QPainter::HighQualityAntialiasing</set>
+        <set>QPainter::HighQualityAntialiasing</set>
        </property>
        <property name="dragMode">
         <enum>QGraphicsView::RubberBandDrag</enum>
@@ -70,7 +70,7 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>332</width>
+              <width>335</width>
               <height>209</height>
              </rect>
             </property>
@@ -98,7 +98,7 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>332</width>
+              <width>335</width>
               <height>98</height>
              </rect>
             </property>
@@ -238,7 +238,7 @@
                </property>
                <property name="icon">
                 <iconset resource="resourses.qrc">
-                 <normaloff>:/images/objects/robot.png</normaloff>:/images/objects/robot.png</iconset>
+                 <normaloff>:/images/objects/bulldozer.png</normaloff>:/images/objects/bulldozer.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -396,7 +396,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>644</width>
+     <width>648</width>
      <height>21</height>
     </rect>
    </property>
