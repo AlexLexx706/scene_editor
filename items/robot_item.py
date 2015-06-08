@@ -23,10 +23,23 @@ class RobotItem(DynamicItem):
         self._source = QtCore.QRectF(0.0, 0.0, self._image.width(), self._image.height())
         self.model_interface = ModelInterface(0)
 
+    def __del__(self):
+        print "__del__"
+
+    @staticmethod
+    def item_type():
+        return "RobotItem"
+
+    @staticmethod
+    def deserialize(desc):
+        return RobotItem(**desc)
+
     def paint_item(self, painter, option, widget):
         painter.drawImage(self.get_rect(), self._image, self._source)
     
     def update_state(self):
         '''Производит какойто процесс'''
         self.rotate(self.model_interface.send_cmd("get_angle"))
+
+DynamicItem.FACTORY_MAP[RobotItem.item_type()] = RobotItem.deserialize
         

@@ -2,13 +2,13 @@
 # -*- coding: utf-8 -*-
 from PyQt4 import QtCore, QtGui, uic
 from PyQt4.QtCore import pyqtSlot, pyqtSignal
-from editable_item import EditableItem
+from base_item import BaseItem
 import resourses
 
-class DynamicItem(EditableItem):
+class DynamicItem(BaseItem):
     def __init__(self, **kw_args):
         super(DynamicItem, self).__init__(**kw_args)
-        self.set_enable_edit(False)
+        self.set_editable(False)
         self.set_attach_grid(False)
     
         self.update_timer = QtCore.QTimer()

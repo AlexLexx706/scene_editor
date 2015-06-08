@@ -3,22 +3,46 @@
 from PyQt4 import QtCore, QtGui, uic
 from PyQt4.QtCore import pyqtSlot, pyqtSignal
 
-class ItemsModel(QtGui.QStandardItemModel):
+class ItemsModel(QtCore.QAbstractListModel):
 
-    def __init__(self, contextMenu=None):
-        QtGui.QStandardItemModel.__init__(self)
-        self.object_map = {}
+    def __init__(self, scene):
+        super(ItemsModel, self).__init__()
+        self.__scene = scene
     
-    def add_object(self, obj):
-        root = self.invisibleRootItem()
-        item = QtGui.QStandardItem(obj.data(0).toPyObject()[QtCore.QString("name")])
-        item.setData(obj)
-        root.appendRow(item)
-        self.object_map[obj] = item
+    def rowCount(self, parent):
+        return len(self.__scene.items())
+    
+    def data(self, index, role):
+        if not index.isValid():
+            return QtCore.QVariant()
+        
+        if role == QtCore.Qt.DisplayRole:
+            return self.__scene.items()[index.row()].get_name()
+        elif role == QtCore.Qt.UserRole:
+            return QtCore.QVariant(self.__scene.items()[index.row()])
+        return QtCore.QVariant()
+            
+    
+    def add_item(self, item):
+        size = len(self.__scene.items())
+        self.beginInsertRows(QtCore.QModelIndex(), size, size + 1)
+        self.__scene.addItem(item)
+        self.endInsertRows()
 
-    def remove_obj(self, obj):
-        self.invisibleRootItem().removeRow(self.object_map[obj].row())
-        del self.object_map[obj]
+    def remove_item(self, item):
+        index = self.__scene.items().index(item)
+        self.beginRemoveRows(QtCore.QModelIndex(), index, index)
+        self.__scene.removeItem(item)
+        self.endRemoveRows()
 
-    def get_model_index(self, obj):
-        return self.object_map[obj].index()
+    def clear_items(self):
+        size = len(self.__scene.items())
+        self.beginRemoveRows(QtCore.QModelIndex(), 0, size)
+        self.__scene.clear()
+        self.endRemoveRows()
+    
+    def get_index(self, item):
+        index = self.__scene.items().index(item)
+        return self.createIndex(index, 0)
+
+    
