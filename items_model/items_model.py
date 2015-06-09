@@ -23,10 +23,11 @@ class ItemsModel(QtCore.QAbstractListModel):
         return QtCore.QVariant()
             
     
-    def add_item(self, item):
+    def add_item(self, item, pos):
         size = len(self.__scene.items())
         self.beginInsertRows(QtCore.QModelIndex(), size, size + 1)
         self.__scene.addItem(item)
+        item.setPos(pos)
         self.endInsertRows()
 
     def remove_item(self, item):

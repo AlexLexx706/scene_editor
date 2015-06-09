@@ -18,13 +18,9 @@ class ModelInterface:
 
 class RobotItem(DynamicItem):
     def __init__(self, **kw_args):
-        super(RobotItem, self).__init__(**kw_args)
-        self._image = QtGui.QImage(":/images/textures/bulldozer-top.png")
-        self._source = QtCore.QRectF(0.0, 0.0, self._image.width(), self._image.height())
+        super(RobotItem, self).__init__(image=QtGui.QImage(":/images/textures/bulldozer-top.png"),
+                                        **kw_args)
         self.model_interface = ModelInterface(0)
-
-    def __del__(self):
-        print "__del__"
 
     @staticmethod
     def item_type():
@@ -33,9 +29,6 @@ class RobotItem(DynamicItem):
     @staticmethod
     def deserialize(desc):
         return RobotItem(**desc)
-
-    def paint_item(self, painter, option, widget):
-        painter.drawImage(self.get_rect(), self._image, self._source)
     
     def update_state(self):
         '''Производит какойто процесс'''

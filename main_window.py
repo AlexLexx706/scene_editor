@@ -5,6 +5,7 @@ from PyQt4.QtCore import pyqtSlot, pyqtSignal
 from items.base_item import BaseItem
 from items.brick_item import BrickItem
 from items.robot_item import RobotItem
+from items.shit_item import ShitItem
 from items_model.items_model import ItemsModel
 from graphic_scene.graphic_scene import GraphicScene
 import resourses
@@ -41,7 +42,7 @@ class MainWindow(QtGui.QMainWindow):
         self.toolButton_2.scene_object_type = RobotItem.item_type()
         self.buttonGroup.addButton(self.toolButton_2)
         
-        self.toolButton_3.scene_object_type = ""
+        self.toolButton_3.scene_object_type = ShitItem.item_type()
         self.buttonGroup.addButton(self.toolButton_3)
         
         self.toolButton_4.scene_object_type = ""
@@ -107,10 +108,12 @@ class MainWindow(QtGui.QMainWindow):
 
             #Сделаем стену
             if desc["type"] == BrickItem.item_type():
-                self.items_model.add_item(BrickItem(context_menu = self.menu_elements, rect=QtCore.QRectF(-20, -20, 40, 40), name=u"Стена", pos=desc["scene_pos"]))
+                self.items_model.add_item(BrickItem(context_menu = self.menu_elements, rect=QtCore.QRectF(-20, -20, 40, 40), name=u"Стена"), pos=desc["scene_pos"])
             elif desc["type"] == RobotItem.item_type():
-                self.items_model.add_item(RobotItem(context_menu = self.menu_elements, rect=QtCore.QRectF(-20, -20, 40, 40), name=u"Бендер", pos=desc["scene_pos"]))
-
+                self.items_model.add_item(RobotItem(context_menu = self.menu_elements, rect=QtCore.QRectF(-20, -20, 40, 40), name=u"Бендер"), pos=desc["scene_pos"])
+            elif desc["type"] == ShitItem.item_type():
+                self.items_model.add_item(ShitItem(context_menu = self.menu_elements, rect=QtCore.QRectF(-10, -10, 20, 20), name=u"Хоу-ноу"), pos=desc["scene_pos"])
+                
     @pyqtSlot('const QItemSelection &', 'const QItemSelection &')
     def on_listView_objects_selectionChanged(self, selected, deselected):
         self.scene.blockSignals(True)
@@ -160,7 +163,7 @@ class MainWindow(QtGui.QMainWindow):
 
             with open(file_path, "rb") as f:
                 for desc in json.loads(f.read()):
-                    self.items_model.add_item(BaseItem.create(desc))
+                    self.items_model.add_item(BaseItem.create(desc), QtCore.QPointF(desc["pos"][0], desc["pos"][1]))
 
             
         

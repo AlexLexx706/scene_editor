@@ -6,15 +6,27 @@ from base_item import BaseItem
 import resourses
 
 class DynamicItem(BaseItem):
-    def __init__(self, **kw_args):
+    update_timer = QtCore.QTimer()
+
+
+    def __init__(self, image=None, **kw_args):
         super(DynamicItem, self).__init__(**kw_args)
         self.set_editable(False)
         self.set_attach_grid(False)
-    
-        self.update_timer = QtCore.QTimer()
-        self.update_timer.start(1000/33)
+        self._image = image
+        
+        if self._image is not None:
+            self._source = QtCore.QRectF(0.0, 0.0, self._image.width(), self._image.height())
+        
+        if not self.update_timer.isActive():
+            self.update_timer.start(1000/33)
+
         self.update_timer.timeout.connect(self.update_state)
+
+    def paint_item(self, painter, option, widget):
+        if self._image is not None:
+            painter.drawImage(self.get_rect(), self._image, self._source)
     
     def update_state(self):
         '''Производит какойто процесс'''
-        print "update_state"
+        pass

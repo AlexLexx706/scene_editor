@@ -32,8 +32,8 @@ class BaseItem(QtGui.QGraphicsItem):
         self.__editable = kw_args["editable"] if "editable" in kw_args else True
         self.__edit_marker_size = kw_args["edit_marker_size"] if "edit_marker_size" in kw_args else 10
         
-        self.setPos((kw_args["pos"] if isinstance(kw_args["pos"], QtCore.QPointF) else QtCore.QPointF(kw_args["pos"][0], kw_args["pos"][1]))\
-            if "pos" in kw_args else QtCore.QPointF(0.0, 0.0))
+        #self.setPos((kw_args["pos"] if isinstance(kw_args["pos"], QtCore.QPointF) else QtCore.QPointF(kw_args["pos"][0], kw_args["pos"][1]))\
+        #    if "pos" in kw_args else QtCore.QPointF(0.0, 0.0))
 
         self.__name = kw_args["name"] if "name" in kw_args else "unknown"
 
