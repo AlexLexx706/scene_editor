@@ -3,6 +3,8 @@
 import logging
 import json
 import os
+import sys
+import logging
 from PyQt4 import QtCore, QtGui, uic
 from PyQt4.QtCore import pyqtSlot, pyqtSignal
 from scene_editor.items.base_item import BaseItem
@@ -12,6 +14,7 @@ from scene_editor.items.shit_item import ShitItem
 from scene_editor.items_model.items_model import ItemsModel
 from scene_editor.graphic_scene.graphic_scene import GraphicScene
 import scene_editor.resourses
+
 
 
 logger = logging.getLogger(__name__)
@@ -183,10 +186,7 @@ class MainWindow(QtGui.QMainWindow):
                         desc), QtCore.QPointF(desc["pos"][0], desc["pos"][1]))
 
 
-if __name__ == '__main__':
-    import sys
-    import logging
-
+def main():
     logging.basicConfig(
         format='%(levelname)s %(name)s::%(funcName)s%(message)s',
         level=logging.DEBUG)
@@ -197,3 +197,7 @@ if __name__ == '__main__':
     app.installEventFilter(widget)
     widget.show()
     app.exec_()
+
+
+if __name__ == '__main__':
+    main()
