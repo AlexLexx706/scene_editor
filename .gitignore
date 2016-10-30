@@ -1,4 +1,3 @@
-/graphic_scene/*.pyc
-/*.pyc
-/.idea
+*.pyc
+.idea
 venv
