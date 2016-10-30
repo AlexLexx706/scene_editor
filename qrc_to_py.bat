@@ -1,1 +1,1 @@
-pyrcc4 -o resourses.py resourses.qrc
+pyrcc4 -o scene_editor/resourses.py scene_editor/resourses.qrc

@@ -1,1 +1,1 @@
-python main_window.py
+sou python main_window.py
